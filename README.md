@@ -62,6 +62,10 @@ This application can be deployed to multiple platforms:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/samiramulla82-sketch/Bud-Hunter-)
 
+**Quick start:** Click the button above for one-click deployment.
+
+**For detailed instructions**, including team access, permissions, and troubleshooting, see our [Comprehensive Vercel Deployment Guide](./DEPLOYMENT_VERCEL.md).
+
 **Manual deployment:**
 
 1. Install Vercel CLI: `npm i -g vercel`
@@ -143,6 +147,18 @@ The application uses the `window.storage` API for client-side data persistence. 
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+For detailed contribution guidelines, including development setup, deployment access, and code style, see our [Contributing Guide](./CONTRIBUTING.md).
+
+### Quick Start for Contributors
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test locally with `npm run dev`
+5. Submit a pull request
+
+**Need Vercel access?** See the [Deployment Access](./CONTRIBUTING.md#deployment-access) section in the contributing guide.
 
 ## ⚖️ Legal Notice
 
