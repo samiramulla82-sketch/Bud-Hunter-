@@ -1,11 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, Search, Plus, Info, ExternalLink } from 'lucide-react';
 
+interface Review {
+  id: number;
+  rating: number;
+  text: string;
+  effects: string[];
+  date: string;
+}
+
+interface Strain {
+  id: number;
+  name: string;
+  type: string;
+  avgRating: number;
+  reviews: Review[];
+}
+
+interface NewReview {
+  strainName: string;
+  rating: number;
+  review: string;
+  effects: string[];
+  type: string;
+}
+
 const BudHunter = () => {
-  const [strains, setStrains] = useState([]);
+  const [strains, setStrains] = useState<Strain[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newReview, setNewReview] = useState({
+  const [newReview, setNewReview] = useState<NewReview>({
     strainName: '',
     rating: 5,
     review: '',
@@ -55,7 +79,7 @@ const BudHunter = () => {
     }
   };
 
-  const saveStrains = async (strainsData) => {
+  const saveStrains = async (strainsData: Strain[]) => {
     try {
       await window.storage.set('bud-hunter-strains', JSON.stringify(strainsData));
     } catch (error) {
@@ -69,7 +93,7 @@ const BudHunter = () => {
     const updatedStrains = [...strains];
     let strain = updatedStrains.find(s => s.name.toLowerCase() === newReview.strainName.toLowerCase());
 
-    const review = {
+    const review: Review = {
       id: Date.now(),
       rating: newReview.rating,
       text: newReview.review,
@@ -79,16 +103,16 @@ const BudHunter = () => {
 
     if (strain) {
       strain.reviews.push(review);
-      strain.avgRating = strain.reviews.reduce((sum, r) => sum + r.rating, 0) / strain.reviews.length;
+      strain.avgRating = strain.reviews.reduce((sum: number, r: Review) => sum + r.rating, 0) / strain.reviews.length;
     } else {
-      strain = {
+      const newStrain: Strain = {
         id: Date.now(),
         name: newReview.strainName,
         type: newReview.type,
         avgRating: newReview.rating,
         reviews: [review]
       };
-      updatedStrains.push(strain);
+      updatedStrains.push(newStrain);
     }
 
     setStrains(updatedStrains);
@@ -101,15 +125,15 @@ const BudHunter = () => {
     s.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getWikiLink = (strainName) => {
+  const getWikiLink = (strainName: string) => {
     return `https://en.wikipedia.org/wiki/${encodeURIComponent(strainName.replace(/ /g, '_'))}_(cannabis)`;
   };
 
-  const getLeaflyLink = (strainName) => {
+  const getLeaflyLink = (strainName: string) => {
     return `https://www.leafly.com/strains/${encodeURIComponent(strainName.toLowerCase().replace(/ /g, '-'))}`;
   };
 
-  const getSeedfinderLink = (strainName) => {
+  const getSeedfinderLink = (strainName: string) => {
     return `https://en.seedfinder.eu/strain-info/${encodeURIComponent(strainName.replace(/ /g, '_'))}/`;
   };
 
@@ -308,7 +332,7 @@ const BudHunter = () => {
                   value={newReview.review}
                   onChange={(e) => setNewReview({...newReview, review: e.target.value})}
                   className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-green-500"
-                  rows="4"
+                  rows={4}
                   placeholder="Share your experience..."
                 />
               </div>
